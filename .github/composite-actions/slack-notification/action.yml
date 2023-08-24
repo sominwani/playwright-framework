@@ -1,0 +1,22 @@
+name: slack-notification
+description: Send slack notifications on workflow failure
+inputs:
+  slack-webhook:
+    description: The slack webhook to be used for the notification
+    required: true
+  job-status:
+    description: The status of the build job
+    required: true
+  message-title:
+    description: The message title to be used
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Slack notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ inputs.slack-webhook }}
+        SLACK_COLOR: ${{ inputs.job-status }}
+        SLACK_MESSAGE: ${{ inputs.job-status }}
+        SLACK_TITLE: ${{ inputs.message-title }}
